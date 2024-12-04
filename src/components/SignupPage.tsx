@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signup } from '../api';
+import { signup } from '../api.tsx';
 import '../css/SignupPage.css';
 
 interface LoginPageProps {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createJob } from '../api';
+import { createJob } from '../api.tsx';
 import '../css/PostJobPage.css';
 
 const PostJobPage: React.FC = () => {
