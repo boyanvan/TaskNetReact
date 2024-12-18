@@ -17,12 +17,12 @@ const Profile = () => {
 
     const [activeTab, setActiveTab] = useState('overview');
     const [profileImage, setProfileImage] = useState(defaultProfileImage);
-    const [firstName, setFirstName] = useState('Iva');
-    const [lastName, setLastName] = useState('Traykova');
+    const [firstName, setFirstName] = useState('Viktoria');
+    const [lastName, setLastName] = useState('Todorova');
     const [email, setEmail] = useState('user@gmail.com');
     const [location, setLocation] = useState('Varna');
-    const [introduction, setIntroduction] = useState('Developer with over 5 years\' experience working in both the public and private sectors...');
-    const [languages, setLanguages] = useState(['English', 'German', 'French']);
+    const [introduction, setIntroduction] = useState('Graphic designer with over 8 years\' experience working in both the public and private sectors.I am a creative Graphic Designer with proven experience in crafting visually engaging designs for both print and digital media. Proficient in Adobe Creative Suite (Photoshop, Illustrator, InDesign), I specialize in branding, marketing materials, and social media graphics. My skills in typography, color theory, and visual storytelling allow me to effectively communicate brand messages. I have successfully contributed to projects that increased audience engagement and strengthened brand identity');
+    const [languages, setLanguages] = useState(['English', 'German', 'French', 'Bulgarian']);
     const [tempProfileImage, setTempProfileImage] = useState(null);
     // Temporary state variables for updates
     const [tempFirstName, setTempFirstName] = useState(firstName);
@@ -336,11 +336,11 @@ const Profile = () => {
                                             <hr className="profile-my-4" />
                                             <h4 className="profile-fs-18 profile-fw-bold mt-4">Skills</h4>
                                             <div className="profile-candidate-skills-content mt-4">
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Cloud Management</button>
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Responsive Design</button>
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Network Architecture</button>
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">PHP</button>
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Bootstrap</button>
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Typography</button>
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Visual Communication</button>
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Adobe Creative Suite</button>
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Color Theory</button>
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Creativity and Problem Solving</button>
                                                 <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">UI & UX Designer</button>
                                             </div>
                                             <h4 className="profile -fs-18 profile-fw-bold mt-4">Spoken languages</h4>
