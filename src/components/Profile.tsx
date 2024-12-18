@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import '../css/ProfileModule.css';
 
 import facebookIcon from '../images/facebook.png';
@@ -10,6 +12,7 @@ import defaultProfileImage from '../images/profile2.jpg';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
+    const navigate = useNavigate();
     useEffect(() => {
         showOverview();
     }, []);
@@ -349,6 +352,29 @@ const Profile = () => {
                                                 ))}
                                             </div>*/}
                                             <h4 className="profile-fs-18 profile-fw-bold">PORTFOLIO</h4>
+                                            <div className="portfolio-section">
+                                            <div className="portfolio-images">
+                                                                                <img 
+                                                src={require('../images/1port.jpg')} 
+                                                alt="Project 1" 
+                                                onClick={() => navigate('/Portfolio.')} 
+                                                className="portfolio-image"
+                                            />
+                                            <img 
+                                                src={require('../images/2port.jpg')} 
+                                                alt="Project 2" 
+                                                onClick={() => navigate('//Portfolio')} 
+                                                className="portfolio-image"
+                                            />
+                                            <img 
+                                                src={require('../images/3port.jpg')} 
+                                                alt="Project 3" 
+                                                onClick={() => navigate('//Portfolio')} 
+                                                className="portfolio-image"
+                                            />
+                                        </div>
+                                    </div>
+                                            
                                             
 
                                         </div>
