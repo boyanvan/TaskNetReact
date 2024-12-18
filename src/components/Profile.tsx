@@ -5,10 +5,9 @@ import facebookIcon from '../images/facebook.png';
 import twitterIcon from '../images/twitter.jpg';
 import whatsappIcon from '../images/whatsapp.jpeg';
 import callIcon from '../images/call.png';
-import defaultProfileImage from '../images/profile.jpg';
+import defaultProfileImage from '../images/profile2.jpg';
 
 import { Link } from 'react-router-dom';
-import BookmarksJobs from './BookmarksJobs';
 
 const Profile = () => {
     useEffect(() => {
@@ -181,16 +180,6 @@ const Profile = () => {
     return (
         <div className="profile-min-h-screen profile-bg-background profile-flex">
             <div className="profile-flex-1">
-                <div className="profile-header">
-                    <h1 className="profile-text-2xl profile-font-bold profile-text-primary">My Profile</h1>
-                    <div className="profile-button-group">
-                    <Link to="/bookmarks-jobs">
-                        <button className="profile-btn profile-btn-primary">View Bookmarked Jobs</button>
-                    </Link>
-                        <a href="login.html"><button className="profile-btn profile-btn-ghost">Log In</button></a>
-                        <a href="signup.html"><button className="profile-btn profile-btn-primary">Sign Up</button></a>
-                    </div>
-                </div>
 
                 <div className="profile-main-content">
                     <div className="profile-left-form" style={{ marginTop: 20 }}>
@@ -200,14 +189,14 @@ const Profile = () => {
                             </div>
                             <h2 className="profile-name" id="nameAll">{firstName} {lastName}</h2>
                             <p className="profile-title">Developer</p>
-                            <div className="profile-rating">
+                            {/*<div className="profile-rating">
                                 <i>★</i>
                                 <i>★</i>
                                 <i>★</i>
                                 <i>★</i>
                                 <i>★</i>
-                            </div>
-                            <div className="profile-social-links">
+                            </div>*/}
+                            {/*<div className="profile-social-links">
                                 <ul className="profile-candidate-detail-social-menu list-inline mb-0">
                                     <li className="list-inline-item">
                                         <a href="javascript:void(0)" className="profile-social-link">
@@ -230,9 +219,15 @@ const Profile = () => {
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>*/}
                             <hr />
-                            <h3 className="profile-section-title">Documents</h3>
+                            <h3 className="profile-section-title">Spoken Languages</h3>
+                            <div className="profile-candidate-languages-content mt-4" id="languageButtonsContainer">
+                                                {languages.map((language, index) => (
+                                                    <button key={index} className="profile-btn profile-btn-sm profile-btn-language mb-2">{language}</button>
+                                                ))}
+                                            </div>
+                            {/*<h3 className="profile-section-title">Documents</h3>
                             <div className="profile-document">
                                 <i className="profile-document-icon fa fa-file"></i>
                                 <span className="profile-document-title">Resume.pdf</span>
@@ -242,7 +237,7 @@ const Profile = () => {
                                 <i className="profile-document-icon fa fa-file"></i>
                                 <span className="profile-document-title">Cover-letter.pdf</span>
                                 <i className="profile-download-icon fa fa-download"></i>
-                            </div>
+                            </div>*/}
                             <hr />
                             <div className="profile-contacts">
                                 <h3 className="profile-section-title">Contacts</h3>
@@ -262,9 +257,9 @@ const Profile = () => {
                     <div className="profile-right-form">
                         <div className="profile-card profile-content-page mt-4 mt-lg-0" style={{ marginTop: 20 }}>
                             <div className="profile-button-container">
-                                <button type="button" className="profile-btn profile-btn-overview" onClick={showOverview}>Overview</button>
+                                {/*<button type="button" className="profile-btn profile-btn-overview" onClick={showOverview}>Overview</button>
                                 <div className="profile-separator"></div>
-                                <button type="button" className="profile-btn profile-btn-settings" onClick={showSettings}>Settings</button>
+                                {/* <button type="button" className="profile-btn profile-btn-settings" onClick={showSettings}>Settings</button> */}
                             </div>
                             <hr />
                             <div className="profile-card-body p-4">
@@ -277,8 +272,20 @@ const Profile = () => {
                                                 <p className="text-muted">
                                                     It describes the candidate's relevant experience, skills, and achievements. The purpose of this career summary is to explain your qualifications for the job in 3-5 sentences and convince the manager to read the whole resume document.
                                                 </p>
+                                            </div>  
+                                            <h4 className="profile-fs-18 profile-fw-bold mt-4">Skills</h4>
+                                            <div className="profile-candidate-skills-content mt-4">
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Cloud Management</button>
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Responsive Design</button>
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Network Architecture</button>
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">PHP</button>
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Bootstrap</button>
+                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">UI & UX Designer</button>
                                             </div>
-                                            <div className="profile-candidate-education-details mt-4">
+                                            <br>
+                                            </br>
+                                            <hr />
+                                            {/*<div className="profile-candidate-education-details mt-4">
                                                 <h4 className="profile-fs-18 profile-fw-bold mb-0 ">Education</h4>
                                                 <div className="profile-candidate-education-content mt-4 d-flex">
                                                     <div className="profile-circle">B</div>
@@ -310,8 +317,8 @@ const Profile = () => {
                                                         </p>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <hr className="profile-my-4" />
+                                            </div>*/}
+                                            {/*<hr className="profile-my-4" />*/}
                                             <h4 className="profile-fs-18 profile-fw-bold">Experiences</h4>
                                             <div className="profile-candidate-experience-content mt-4 d-flex">
                                                 <div className="profile-circle">W</div>
@@ -334,21 +341,16 @@ const Profile = () => {
                                                 </div>
                                             </div>
                                             <hr className="profile-my-4" />
-                                            <h4 className="profile-fs-18 profile-fw-bold mt-4">Skills</h4>
-                                            <div className="profile-candidate-skills-content mt-4">
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Cloud Management</button>
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Responsive Design</button>
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Network Architecture</button>
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">PHP</button>
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">Bootstrap</button>
-                                                <button className="profile-btn profile-btn-sm profile-btn-skill mb-2">UI & UX Designer</button>
-                                            </div>
-                                            <h4 className="profile -fs-18 profile-fw-bold mt-4">Spoken languages</h4>
+                                            
+                                            {/*<h4 className="profile -fs-18 profile-fw-bold mt-4">Spoken languages</h4>
                                             <div className="profile-candidate-languages-content mt-4" id="languageButtonsContainer">
                                                 {languages.map((language, index) => (
                                                     <button key={index} className="profile-btn profile-btn-sm profile-btn-language mb-2">{language}</button>
                                                 ))}
-                                            </div>
+                                            </div>*/}
+                                            <h4 className="profile-fs-18 profile-fw-bold">PORTFOLIO</h4>
+                                            
+
                                         </div>
                                     )}
                                     {activeTab === 'settings' && (

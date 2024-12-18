@@ -124,7 +124,15 @@ export default function TaskNetHomepage() {
           <Link to="/">Home</Link>
           <Link to="/post-job">Post a Job</Link>
           <Link to="/how-it-works">How It Works</Link>
-          <Link to="/profile">Profile</Link>
+          <div className="dropdown">
+            <Link to="/profile">Profile</Link>
+            <div className='dropdown-content'>
+              <Link to="/profile/overview">Overview</Link>
+              <Link to="/profile/settings">Settings</Link>
+            </div>
+          </div>
+          
+          
         </nav>
         <div className="auth-buttons">
           {isLoggedIn ? (
