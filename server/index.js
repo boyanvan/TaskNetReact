@@ -7,16 +7,6 @@ const mongoose = require('mongoose');
 
 const app = express();
 const port = process.env.PORT || 5000;
-// Add this to your existing mongoose models
-const ProfileSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  bio: String,
-  skills: [String],
-  isVerified: { type: Boolean, default: false },
-});
-
-const Profile = mongoose.model('Profile', ProfileSchema);
-
 
 mongoose.connect('mongodb://localhost:27017/tasknet', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
@@ -27,24 +17,53 @@ app.use(bodyParser.json());
 
 const JWT_SECRET = 'your-secret-key';
 
-// Mongoose models
+/*  Mongoose models  */
+
 const UserSchema = new mongoose.Schema({
-  name: String,
+  username: { type: String, unique: true },
+  password: String,   // should be saved more securely
   email: { type: String, unique: true },
-  password: String,
+  firstName: String,
+  lastName: String,
 });
 
-const JobSchema = new mongoose.Schema({
+const ProfileSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  bio: String,
+  shortJobDescription: String,
+  skills: [String],
+  profilePicture: String,
+  experiences: [
+    {
+      'jobTitle': String,
+      'companyName': String,
+      'description': String,  // Markdown
+    }
+  ],
+  projects: [
+    {
+      'title': String,
+      'description': String,  // Markdown
+      'images': [String],
+    }
+  ],
+  isVerified: { type: Boolean, default: false },
+});
+
+const JobOfferSchema = new mongoose.Schema({
   title: String,
   description: String,
   category: String,
+  employerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  skillsNeeded: [String],
   budget: Number,
   deadline: Date,
-  userId: mongoose.Schema.Types.ObjectId,
 });
 
 const User = mongoose.model('User', UserSchema);
-const Job = mongoose.model('Job', JobSchema);
+const Profile = mongoose.model('Profile', ProfileSchema);
+const JobOffer = mongoose.model('JobOffer', JobOfferSchema);
 
 // Helper function to generate JWT
 const generateToken = (user) => {
@@ -66,7 +85,53 @@ const verifyToken = (req, res, next) => {
     next();
   });
 };
-// Add these routes to your existing routes
+
+/*  ROUTES  */
+
+app.post('/api/signup', async (req, res) => {
+  console.log('Received signup request:', req.body);
+  try {
+    const { username, email, password } = req.body;
+    if (await User.findOne({ email })) {
+      console.log('User already exists');
+      return res.status(400).send({ message: 'User already exists' });
+    }
+    const hashedPassword = await bcrypt.hash(password, 8);
+    const newUser = new User({ username, email, password: hashedPassword });
+    await newUser.save();
+    console.log('New user saved:', newUser); // Add this line
+    const token = generateToken(newUser);
+    console.log('User created, token generated:', token);
+    res.status(201).send({ auth: true, token });
+  } catch (error) {
+    console.error('Signup error:', error.message);
+    res.status(500).send({ message: 'Error signing up', error: error.message });
+  }
+});
+
+
+app.post('/api/login', async (req, res) => {
+  console.log('Received login request:', req.body); // Add this line
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log('User not found:', email); // Add this line
+      return res.status(404).send({ message: 'User not found' });
+    }
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      console.log('Invalid password for user:', email); // Add this line
+      return res.status(401).send({ auth: false, token: null });
+    }
+    const token = generateToken(user);
+    console.log('Login successful, token generated:', token); // Add this line
+    res.status(200).send({ auth: true, token });
+  } catch (error) {
+    console.error('Login error:', error.message); // Add this line
+    res.status(500).send({ message: 'Error logging in', error: error.message });
+  }
+});
 
 // Create profile
 app.post('/api/profiles', verifyToken, async (req, res) => {
@@ -128,51 +193,6 @@ app.put('/api/profiles/:userId/verify', verifyToken, async (req, res) => {
 
 
 
-
-app.post('/api/signup', async (req, res) => {
-  console.log('Received signup request:', req.body); 
-  try {
-    const { name, email, password } = req.body;
-    if (await User.findOne({ email })) {
-      console.log('User already exists');
-      return res.status(400).send({ message: 'User already exists' });
-    }
-    const hashedPassword = await bcrypt.hash(password, 8);
-    const newUser = new User({ name, email, password: hashedPassword });
-    await newUser.save();
-    console.log('New user saved:', newUser); // Add this line
-    const token = generateToken(newUser);
-    console.log('User created, token generated:', token);
-    res.status(201).send({ auth: true, token });
-  } catch (error) {
-    console.error('Signup error:', error.message);
-    res.status(500).send({ message: 'Error signing up', error: error.message });
-  }
-});
-
-
-app.post('/api/login', async (req, res) => {
-  console.log('Received login request:', req.body); // Add this line
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) {
-      console.log('User not found:', email); // Add this line
-      return res.status(404).send({ message: 'User not found' });
-    }
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword) {
-      console.log('Invalid password for user:', email); // Add this line
-      return res.status(401).send({ auth: false, token: null });
-    }
-    const token = generateToken(user);
-    console.log('Login successful, token generated:', token); // Add this line
-    res.status(200).send({ auth: true, token });
-  } catch (error) {
-    console.error('Login error:', error.message); // Add this line
-    res.status(500).send({ message: 'Error logging in', error: error.message });
-  }
-});
 
 app.post('/api/jobs', verifyToken, async (req, res) => {
   try {
